@@ -27,6 +27,7 @@ and open the template in the editor.
 //fclose($myfile);
 
 $files = glob("*.txt");
+
 foreach ($files as $file) {
     //      VITAL: Necessary to make sure variables are being reset and don't carry over to next file.
         //       Cell 1, 2) Unit # and Msg # [Msg (email) will always have which is why we dont have to 0 or blank out below in intro]
@@ -291,7 +292,6 @@ foreach ($files as $file) {
 //                    $var9='';
 //                    $var10='';
 //                    $var11='';
-              
               $result_split5=explode(' ',$result5[1]);
               
               $mcc = rtrim($result_split5[3], ",");
@@ -302,8 +302,31 @@ foreach ($files as $file) {
               $var13 = $lac;
               $cid = $result_split5[9];
               $var14 = $cid;
-              $link2 = $result_split5[10];
-              $var15 = $link2;
+              
+              
+              if(substr(trim($result_split5[10]),-4) !== ".php"){
+                  
+                    $lins = file($file);
+                    
+                    foreach($lins as $lin){
+                        $match = strpos($lin, '.php');
+                        
+                        if($match){
+                            
+                            $link2 = trim($lin);
+                            $var15 = trim($result_split5[10]).trim($lin);
+//                            print_r($link1);
+                            break;
+                        }
+                        
+                    }
+                  
+              } else {
+                  $link2 = $result_split5[10];
+                  $var15 = $link2;
+              }
+              
+              
               
 //              print_r($var15 . $var14);
 //              echo "<br/>";
